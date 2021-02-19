@@ -32,9 +32,18 @@ def movie_detail_online(x):
     uniq=id
     title=mv.get('title')
     year=mv.get('year')
-    rating=mv.get('rating')
-    directors=', '.join(map(str,mv.get('directors')))
-    cast=', '.join(map(str,mv.get('cast')))
+    if mv.get('rating')==None:
+        rating = "Not available yet"
+    else:
+        rating=mv.get('rating')
+    if mv.get('directors')==None:
+        directors = None
+    else:
+        directors=', '.join(map(str,mv.get('directors')))
+    if mv.get('cast')==None:
+        cast = None
+    else:
+        cast=', '.join(map(str,mv.get('cast')))
     if mv.get('plot outline')==None:
         plot=None
     else:
