@@ -1,4 +1,4 @@
-# moviesDB
+# moviesDB [CLI]
 ## Get all your movie details in one place! Works on IMDb API
 
 # Requirements
