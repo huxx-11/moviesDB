@@ -76,16 +76,18 @@ def movie_store():
     print("\nPress any key to continue...")
     input()
 
-def movie_search_offline(name):
+def movie_search_offline(name,x,visibility):
     num=0
     global offline_id
     query = "select id,movie_name,year from movies where movie_name like ('%"+name+"%');"
     cursor.execute(query)
     offline_db=cursor.fetchall()
-    for i in offline_db:
-        num+=1
-        print(num,".",i[1],"-",i[2])
-        offline_id=i[0]
+    if visibility==True:
+        for i in offline_db:
+            num+=1
+            print(num,".",i[1],"-",i[2])
+    elif visibility==False:
+        offline_id=offline_db[x-1][0]
     return
 
 def movie_detail_offline(x):
@@ -131,9 +133,10 @@ while True:
         if movie_offline_check(name)==True:
             print("Movie already exists in offline database")
             print(divider)
-            movie_search_offline(name)
+            movie_search_offline(name, 0, visibility=True)
             print(divider)
             movie_choice=int(input("Enter the movie number: "))
+            movie_search_offline(name, movie_choice, visibility=False)
             os.system('cmd /c cls')
             movie_detail_offline(offline_id)
             input()
