@@ -25,7 +25,7 @@ Shows **Title, Year, Rating, Directors, Cast, Plot and Genre**
 
 ## Screenshots
 Main menu
-![Main Menu](https://i.ibb.co/HpcP5xY/Screenshot-2021-02-20-022027.png)
+![Main Menu](https://i.ibb.co/C6csr8T/Screenshot-2021-02-20-022027.png)
 
 Movie search demo
 ![Movie search demo](https://i.ibb.co/ZT93pX8/Screenshot-2021-02-20-022209.png)
