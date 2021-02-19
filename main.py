@@ -13,7 +13,6 @@ sql_db = str(input("Enter database name (or press Enter to use 'imdb'): ")) or "
 os.system('cmd /c cls')
 db=sq.connect(host=sql_host,user=sql_id,passwd=sql_pass,database=sql_db)
 cursor=db.cursor()
-
 moviesdb=imdb.IMDb()
 
 def movie_search_online(name):
