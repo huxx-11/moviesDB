@@ -86,7 +86,6 @@ def movie_detail_online(x):
     else:
         plot=(mv.get('plot outline')).replace('"',"")
     genre=', '.join(mv.get('genre'))
-    #print(type(title),type(year),type(rating),type(directors),type(cast),type(plot),type(genre))
     return
 
 def movie_offline_check_dep(x):
@@ -222,6 +221,7 @@ while True:
                             print("\nPress any key to continue...")
                             input()
                             os.system(shell+clr)
+
     elif opt==2:
         while True:
             print(fg.figlet_format("Download", "slant"))
@@ -267,6 +267,7 @@ while True:
                             print(divider)
                             movie_store()
                             os.system(shell+clr)
+
     elif opt==3:
         print(fg.figlet_format("Database", "slant"))
         print(divider)
@@ -277,6 +278,7 @@ while True:
         print("Press any key to return to Main Menu")
         input()
         os.system(shell+clr)
+
     elif opt==4:
         print(fg.figlet_format("Thank You", "slant"))
         print("Press and key to exit...")
@@ -284,6 +286,7 @@ while True:
         db.close()
         input()
         break
+
     elif opt==-1 or opt>4:
         print(divider)
         print("Wrong choice, try again! (Press Enter to continue)")
