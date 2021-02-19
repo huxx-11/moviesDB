@@ -155,7 +155,7 @@ def database_stock():
 
 banner=fg.figlet_format("Movie Search")
 divider="--------------------------------------"
-options="1. Search for a movie\n2. Download a movie in the database\n3. Show movies in offline database\n4. Exit\n"
+options="1. Search for a movie\n2. Download a movie to the database\n3. Show movies in offline database\n4. Exit\n"
 while True:
     print(banner)
     print(divider)
