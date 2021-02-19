@@ -100,7 +100,7 @@ def movie_detail_offline(x):
         cast_offline = i[5]
         plot_offline = i[6]
         genre_offline = i[7]
-        print(fg.figlet_format(title_offline,"slant"), "Year:", str(year_offline), "\n\nRating:", str(rating_offline), "\n\nPlot Details:"+str(plot_offline), "\n\nDirectors:"+str(directors_offline), "\n\nCast:"+str(cast_offline), "\n\nGenre:"+str(genre_offline))
+        print(fg.figlet_format(title_offline,"slant"), "\nYear:", str(year_offline), "\n\nRating:", str(rating_offline), "\n\nPlot Details: "+str(plot_offline), "\n\nDirectors: "+str(directors_offline), "\n\nCast: "+str(cast_offline), "\n\nGenre: "+str(genre_offline))
         print("\nPress any key to continue...")
         return
 
@@ -146,7 +146,7 @@ while True:
             movie_choice=int(input("Enter the movie number: "))
             os.system('cmd /c cls')
             movie_detail_online(movie_choice)
-            print(fg.figlet_format(title,"slant"), "Year:", str(year), "\n\nRating:", str(rating),"\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(cast) + "\n\nGenre: " + str(genre))
+            print(fg.figlet_format(title,"slant"), "\nYear: ", str(year), "\n\nRating: ", str(rating),"\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(cast) + "\n\nGenre: " + str(genre))
             print("\nPress enter to continue...")
             input()
             os.system('cmd /c cls')
