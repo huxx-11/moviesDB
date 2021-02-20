@@ -8,12 +8,8 @@
  - MySQL Community Server - https://dev.mysql.com/downloads/mysql/
 
 ## Usage
-Windows:
-> Run the file directly
-> or, browse using cmd/ps to the directory and run > python main.py
-
-Linux / macOS
-> Browse to the directory using terminal and run > python3 main.py 
+> For full functionality, don't run using IDLE or any other Python IDE.
+> Run via terminal (Linux/macOS) or cmd/ps (Windows)
 
 *It automatically initializes the required database and table, on initial run*
 
