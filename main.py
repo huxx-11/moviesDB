@@ -17,16 +17,20 @@ import pyfiglet as fg
 moviesdb=imdb.IMDb()
 
 def enable_local_db():
-    global sql_host,sql_id,sql_pass,sql_db,sql,db,cursor
-    sql_host = str(input("Enter database host (or press Enter to use 'localhost'): ")) or "localhost"
-    sql_id = str(input("Enter database UID (or press Enter to use 'root'): ")) or "root"
-    sql_pass = str(input("Enter database Password (or press Enter to use 'toor'): ")) or "toor"
-    sql_db = str(input("Enter database name (or press Enter to use 'imdb'): ")) or "imdb"
-    try:
-        db=sq.connect(host=sql_host,user=sql_id,passwd=sql_pass)
-        cursor=db.cursor()
-    except:
-        print("Database connection failed! Please check if local instance is running or not, and try again")
+    while True:
+        global sql_host,sql_id,sql_pass,sql_db,sql,db,cursor
+        sql_host = str(input("Enter database host (or press Enter to use 'localhost'): ")) or "localhost"
+        sql_id = str(input("Enter database UID (or press Enter to use 'root'): ")) or "root"
+        sql_pass = str(input("Enter database Password (or press Enter to use 'toor'): ")) or "toor"
+        sql_db = str(input("Enter database name (or press Enter to use 'imdb'): ")) or "imdb"
+        try:
+            db=sq.connect(host=sql_host,user=sql_id,passwd=sql_pass)
+            cursor=db.cursor()
+            break
+        except:
+            print("Database connection failed! Please check if local instance is running or not, \nand press any key to try again")
+            input()
+            os.system(shell + clr)
 
 def check_db_tb(db_name):
     qu_db_crt='create database '+db_name+';'
