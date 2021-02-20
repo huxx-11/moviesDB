@@ -14,14 +14,19 @@ import imdb
 import mysql.connector as sq
 import pyfiglet as fg
 
-sql_host = str(input("Enter database host (or press Enter to use 'localhost'): ")) or "localhost"
-sql_id = str(input("Enter database UID (or press Enter to use 'root'): ")) or "root"
-sql_pass = str(input("Enter database Password (or press Enter to use 'toor'): ")) or "toor"
-sql_db = str(input("Enter database name (or press Enter to use 'imdb'): ")) or "imdb"
-
-db=sq.connect(host=sql_host,user=sql_id,passwd=sql_pass)
-cursor=db.cursor()
 moviesdb=imdb.IMDb()
+
+def enable_local_db():
+    global sql_host,sql_id,sql_pass,sql_db,sql,db,cursor
+    sql_host = str(input("Enter database host (or press Enter to use 'localhost'): ")) or "localhost"
+    sql_id = str(input("Enter database UID (or press Enter to use 'root'): ")) or "root"
+    sql_pass = str(input("Enter database Password (or press Enter to use 'toor'): ")) or "toor"
+    sql_db = str(input("Enter database name (or press Enter to use 'imdb'): ")) or "imdb"
+    try:
+        db=sq.connect(host=sql_host,user=sql_id,passwd=sql_pass)
+        cursor=db.cursor()
+    except:
+        print("Database connection failed! Please check if local instance is running or not, and try again")
 
 def check_db_tb(db_name):
     qu_db_crt='create database '+db_name+';'
@@ -50,7 +55,21 @@ def check_db_tb(db_name):
     else:
         print("\nTable found!")
 
-check_db_tb(sql_db)
+while True:
+    db_choice = str(input("Do you want to use local MySQL database to store info (Default Y)? [Y/N]") or "Y" or "y")
+    if db_choice in ["y","Y"]:
+        print("You're using online/offline mode")
+        enable_local_db()
+        check_db_tb(sql_db)
+        break
+    elif db_choice in ["n","N"]:
+        print("You're using online only mode'")
+        break
+    else:
+        print("Wrong Choice! Try again")
+        input()
+        os.system(shell+clr)
+
 os.system(shell+clr)
 
 def movie_search_online(name):
@@ -152,143 +171,253 @@ def database_stock():
         print(num2,".",i[0],"-",i[1])
     return
 
-banner=fg.figlet_format("Movie Search")
-divider="--------------------------------------"
-options="1. Search for a movie\n2. Download a movie to the database\n3. Show movies in offline database\n4. Exit\n"
-while True:
-    print(banner)
-    print(divider)
-    print("Choose the following options to continue: \n")
-    print(options)
-    opt=int(input("Enter your choice: ") or -1)
-    os.system(shell+clr)
-    if opt==1:
+def offline_show_menu():
+    print("Movie already exists in offline database")
+    while True:
         while True:
-            print(fg.figlet_format("Search","slant"))
-            print(divider)
-            name=str(input("Enter the movie you want to search (or enter 0 to go back to main menu): "))
-            print(divider)
-            if name=='':
-                print('Please enter a movie name! (Press any key to try again!)')
-                input()
-                os.system(shell+clr)
-            elif name=="0":
-                os.system(shell+clr)
+            try:
+                print(divider)
+                movie_search_offline(name, 0, visibility=True)
+                print(">> Enter 0 to go back")
+                print(divider)
+                movie_choice = int(input("Enter the movie number: "))
                 break
-            else:
-                os.system(shell+clr)
-                print("You searched: "+name)
-                if movie_offline_check(name)==True:
-                    while True:
+            except:
+                print("Choice doesn't exist, press any key to try again")
+                input()
+                os.system(shell + clr)
+        if movie_choice <= num1 and not movie_choice==0:
+            os.system(shell + clr)
+            movie_search_offline(name, movie_choice, visibility=False)
+            movie_detail_offline(offline_id)
+            input()
+            os.system(shell + clr)
+        elif int(movie_choice) == 0:
+            os.system(shell + clr)
+            break
+        else:
+            print("Choice doesn't exist, press any key to try again")
+            input()
+            os.system(shell + clr)
+    return
+
+def online_show_menu():
+    while True:
+        while True:
+            try:
+                print("Searching movie online")
+                print(divider)
+                movie_search_online(name)
+                print(">> Enter 0 to go back")
+                print(divider)
+                movie_choice = int(input("Enter the movie number: "))
+                break
+            except:
+                print("Choice doesn't exist, press any key to try again")
+                input()
+                os.system(shell + clr)
+        if movie_choice <= num and not movie_choice == 0:
+            os.system(shell + clr)
+            movie_detail_online(movie_choice)
+            print(fg.figlet_format(title, "slant"), "\nYear: ", str(year), "\n\nRating: ", str(rating),
+                  "\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(
+                      cast) + "\n\nGenre: " + str(genre))
+            print("\nPress any key to continue...")
+            input()
+            os.system(shell + clr)
+        elif movie_choice == 0:
+            os.system(shell + clr)
+            break
+        elif movie_choice > num:
+            print("Choice doesn't exist, press any key to try again")
+            input()
+            os.system(shell + clr)
+    return
+
+def offline_main_menu():
+    global name
+    while True:
+        while True:
+            try:
+                print(banner)
+                print(divider)
+                print("Choose the following options to continue: \n")
+                print(options)
+                opt = int(input("Enter your choice: "))
+                break
+            except:
+                os.system(shell + clr)
+                print(divider)
+                print("Wrong choice, try again! (Press Enter to continue)")
+                input()
+                os.system(shell + clr)
+        os.system(shell + clr)
+        if opt == 1:
+            while True:
+                print(fg.figlet_format("Search", "slant"))
+                print(divider)
+                name = str(input("Enter the movie you want to search (or enter 0 to go back to main menu): "))
+                print(divider)
+                if name == '':
+                    print('Please enter a movie name! (Press any key to try again!)')
+                    input()
+                    os.system(shell + clr)
+                elif name == "0":
+                    os.system(shell + clr)
+                    break
+                else:
+                    os.system(shell + clr)
+                    print("You searched: " + name)
+                    if db_choice in ["y", "Y"]:
+                        if movie_offline_check(name) == True:
+                            offline_show_menu()
+                        elif movie_offline_check(name) == False:
+                            online_show_menu()
+                    elif db_choice in ["n", "N"]:
+                        print("Movie will be searched online only")
+                        print(divider)
+                        online_show_menu()
+
+        elif opt == 2:
+            while True:
+                print(fg.figlet_format("Download", "slant"))
+                print(divider)
+                name = str(
+                    input("Enter the movie you want to search and download (or enter 0 to go back to main menu): "))
+                print(divider)
+                if name == '':
+                    print('Please enter a movie name! (Press any key to try again!)')
+                    input()
+                    os.system(shell + clr)
+                elif name == "0":
+                    os.system(shell + clr)
+                    break
+                else:
+                    os.system(shell + clr)
+                    print("You searched: " + name)
+                    if movie_offline_check(name) == True:
                         print("Movie already exists in offline database")
                         print(divider)
                         movie_search_offline(name, 0, visibility=True)
-                        print(">> Enter 0 to go back")
                         print(divider)
-                        movie_choice=int(input("Enter the movie number: ") or -1)
-                        if movie_choice>num1 or movie_choice==-1:
-                            print("Choice doesn't exist, press any key to try again")
-                            input()
-                            os.system(shell+clr)
-                        elif movie_choice==0:
-                            os.system(shell+clr)
-                            break
-                        elif movie_choice<=num1:
-                            os.system(shell+clr)
-                            movie_search_offline(name, movie_choice, visibility=False)
-                            movie_detail_offline(offline_id)
-                            input()
-                            os.system(shell+clr)
-                elif movie_offline_check(name)==False:
-                    while True:
-                        print("Searching movie online")
-                        print(divider)
-                        movie_search_online(name)
-                        print(">> Enter 0 to go back")
-                        print(divider)
-                        movie_choice=int(input("Enter the movie number: ") or -1)
-                        if movie_choice>num or movie_choice==-1:
-                            print("Choice doesn't exist, press any key to try again")
-                            input()
-                            os.system(shell+clr)
-                        elif movie_choice==0:
-                            os.system(shell+clr)
-                            break
-                        elif movie_choice<=num:
-                            os.system(shell+clr)
-                            movie_detail_online(movie_choice)
-                            print(fg.figlet_format(title,"slant"), "\nYear: ", str(year), "\n\nRating: ", str(rating),"\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(cast) + "\n\nGenre: " + str(genre))
-                            print("\nPress any key to continue...")
-                            input()
-                            os.system(shell+clr)
+                        print("Press any key to continue...")
+                        input()
+                        os.system(shell + clr)
+                    elif movie_offline_check(name) == False:
+                        while True:
+                            while True:
+                                try:
+                                    print("Searching movie online")
+                                    print(divider)
+                                    movie_search_online(name)
+                                    print(">> Enter 0 to return to main menu")
+                                    print(divider)
+                                    movie_choice = int(input("Enter the movie number: "))
+                                    break
+                                except:
+                                    print("Choice doesn't exist, press any key to try again")
+                                    input()
+                                    os.system(shell + clr)
+                            uniq, title, year, rating, directors, cast, plot, genre = [None] * 8
+                            if movie_choice <= num and not movie_choice == 0:
+                                movie_detail_online(movie_choice)
+                                print(divider)
+                                movie_store()
+                                os.system(shell + clr)
+                            elif movie_choice == 0:
+                                os.system(shell + clr)
+                                break
+                            elif movie_choice > num:
+                                print("Choice doesn't exist, press any key to try again")
+                                input()
+                                os.system(shell + clr)
 
-    elif opt==2:
+        elif opt == 3:
+            print(fg.figlet_format("Database", "slant"))
+            print(divider)
+            print("Showing movies stored in offline database")
+            print(divider)
+            database_stock()
+            print(divider)
+            print("Press any key to return to Main Menu")
+            input()
+            os.system(shell + clr)
+
+        elif opt == 4:
+            print(fg.figlet_format("Thank You", "slant"))
+            print("Press and key to exit...")
+            cursor.close()
+            db.close()
+            input()
+            break
+
+        else:
+            print(divider)
+            print("Wrong choice, try again! (Press Enter to continue)")
+            input()
+            os.system(shell + clr)
+
+def online_main_menu():
+    global name
+    while True:
         while True:
-            print(fg.figlet_format("Download", "slant"))
-            print(divider)
-            name=str(input("Enter the movie you want to search and download (or enter 0 to go back to main menu): "))
-            print(divider)
-            if name=='':
-                print('Please enter a movie name! (Press any key to try again!)')
-                input()
-                os.system(shell+clr)
-            elif name=="0":
-                os.system(shell+clr)
+            try:
+                print(banner)
+                print(divider)
+                print("Choose the following options to continue: \n")
+                print(options_online)
+                opt = int(input("Enter your choice: "))
                 break
-            else:
-                os.system(shell+clr)
-                print("You searched: " + name)
-                if movie_offline_check(name) == True:
-                    print("Movie already exists in offline database")
-                    print(divider)
-                    movie_search_offline(name, 0, visibility=True)
-                    print(divider)
-                    print("Press any key to continue...")
+            except:
+                os.system(shell + clr)
+                print(divider)
+                print("Wrong choice, try again! (Press Enter to continue)")
+                input()
+                os.system(shell + clr)
+        os.system(shell + clr)
+        if opt == 1:
+            while True:
+                print(fg.figlet_format("Search", "slant"))
+                print(divider)
+                name = str(input("Enter the movie you want to search (or enter 0 to go back to main menu): "))
+                print(divider)
+                if name == '':
+                    print('Please enter a movie name! (Press any key to try again!)')
                     input()
-                    os.system(shell+clr)
-                elif movie_offline_check(name) == False:
-                    while True:
-                        print("Searching movie online")
+                    os.system(shell + clr)
+                elif name == "0":
+                    os.system(shell + clr)
+                    break
+                else:
+                    os.system(shell + clr)
+                    print("You searched: " + name)
+                    if db_choice in ["y", "Y"]:
+                        if movie_offline_check(name) == True:
+                            offline_show_menu()
+                        elif movie_offline_check(name) == False:
+                            online_show_menu()
+                    elif db_choice in ["n", "N"]:
+                        print("Movie will be searched online only")
                         print(divider)
-                        movie_search_online(name)
-                        print(">> Enter 0 to return to main menu")
-                        print(divider)
-                        movie_choice = int(input("Enter the movie number: ") or -1)
-                        uniq, title, year, rating, directors, cast, plot, genre = [None]*8
-                        if movie_choice>num or movie_choice==-1:
-                            print("Choice doesn't exist, press any key to try again")
-                            input()
-                            os.system(shell+clr)
-                        elif movie_choice==0:
-                            os.system(shell+clr)
-                            break
-                        elif movie_choice<=num:
-                            movie_detail_online(movie_choice)
-                            print(divider)
-                            movie_store()
-                            os.system(shell+clr)
+                        online_show_menu()
+        elif opt == 2:
+            print(fg.figlet_format("Thank You", "slant"))
+            print("Press and key to exit...")
+            input()
+            break
 
-    elif opt==3:
-        print(fg.figlet_format("Database", "slant"))
-        print(divider)
-        print("Showing movies stored in offline database")
-        print(divider)
-        database_stock()
-        print(divider)
-        print("Press any key to return to Main Menu")
-        input()
-        os.system(shell+clr)
+        else:
+            print(divider)
+            print("Wrong choice, try again! (Press Enter to continue)")
+            input()
+            os.system(shell + clr)
+    return
 
-    elif opt==4:
-        print(fg.figlet_format("Thank You", "slant"))
-        print("Press and key to exit...")
-        cursor.close()
-        db.close()
-        input()
-        break
-
-    elif opt==-1 or opt>4:
-        print(divider)
-        print("Wrong choice, try again! (Press Enter to continue)")
-        input()
-        os.system(shell+clr)
+banner=fg.figlet_format("Movie Search")
+divider="--------------------------------------"
+options="1. Search for a movie\n2. Download a movie to the database\n3. Show movies in offline database\n4. Exit\n"
+options_online="(Searching online only)\n\n1. Search for a movie\n2. Exit\n"
+if db_choice in ["y","Y"]:
+    offline_main_menu()
+elif db_choice in ["n","N"]:
+    online_main_menu()
