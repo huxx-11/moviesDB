@@ -4,12 +4,14 @@
 ## Get all your movie details in one place! Works on IMDb API
 # Requirements
  - Windows (x64) / Linux / macOS 10.11+
- - Python3 - https://www.python.org/downloads/
- - MySQL Community Server - https://dev.mysql.com/downloads/mysql/
+ - Python3 - https://www.python.org/downloads/ (Optional)
+ - MySQL Community Server - https://dev.mysql.com/downloads/mysql/ (Optional)
 
 ## Usage
 > For full functionality, don't run using IDLE or any other Python IDE.
 > Run via terminal (Linux/macOS) or cmd/ps (Windows)
+
+> Or, get executable files from [releases](https://github.com/strider-one/moviesDB/releases) [Recommended]
 
 *It automatically initializes the required database and table, on initial run*
 
@@ -17,11 +19,11 @@
 Shows **Title, Year, Rating, Directors, Cast, Plot and Genre**
 
  1. Search for movie details online
- 2. Download movie details to MySQL database
- 3. Show the downloaded movie list and also their details
+ 2. Download movie details to MySQL database *(only if using online/offline mode)*
+ 3. Show the downloaded movie list and also their details *(only if using online/offline mode)*
 
 ## Screenshots
-Main menu
+Main menu (Online/Offline mode)
 ![Main Menu](https://i.ibb.co/C6csr8T/Screenshot-2021-02-20-022027.png)
 
 Movie search demo
