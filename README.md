@@ -1,5 +1,6 @@
 # moviesDB [CLI]
 ## Get all your movie details in one place! Works on IMDb API
+<img src="app_icon.ico" alt="moviesDB"/>
 
 # Requirements
  - Windows (x64) / Linux / macOS 10.11+
