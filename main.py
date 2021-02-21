@@ -28,7 +28,8 @@ def enable_local_db():
             cursor = db.cursor()
             break
         except:
-            print("Database connection failed! Please check if local instance is running or not, \nand press any key to try again")
+            print(
+                "Database connection failed! Please check if local instance is running or not, \nand press any key to try again")
             input()
             os.system(shell + clr)
 
