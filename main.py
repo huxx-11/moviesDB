@@ -272,7 +272,7 @@ def person_details(x):
     return
 
 #OFFLINE DB MOVIE MENU FUNCTION
-def offline_show_menu():
+def offline_show_menu(name):
     print("Movie already exists in offline database")
     while True:
         while True:
@@ -303,7 +303,7 @@ def offline_show_menu():
     return
 
 #ONLINE MOVIE MENU FUNCTION
-def online_show_menu():
+def online_show_menu(name):
     while True:
         while True:
             try:
@@ -355,13 +355,13 @@ def search_movie_menu():
             print("You searched: " + name)
             if db_choice in ["y", "Y"]:
                 if movie_offline_check(name):
-                    offline_show_menu()
+                    offline_show_menu(name)
                 elif not movie_offline_check(name):
-                    online_show_menu()
+                    online_show_menu(name)
             elif db_choice in ["n", "N"]:
                 print("Movie will be searched online only")
                 print(divider)
-                online_show_menu()
+                online_show_menu(name)
     return
 
 #SEARCH FOR CAST MENU FUNCTION
