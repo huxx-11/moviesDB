@@ -16,11 +16,16 @@
 *It automatically initializes the required database and table, on initial run*
 
 ## Features
-Shows **Title, Year, Rating, Directors, Cast, Plot and Genre**
+**You can choose Online-only mode or Online/Offline mode, at the startup of the app**
+
+<center> Shows <bold>Title, Year, Rating, Directors, Cast, Plot and Genre</bold> when searching movie details </center>
+
+<center> Shows <bold>Name, Nicknames, Birth Date, Birth Place, Biography and Filmography</bold> when searching cast details </center>
 
  1. Search for movie details online
- 2. Download movie details to MySQL database *(only if using online/offline mode)*
- 3. Show the downloaded movie list and also their details *(only if using online/offline mode)*
+ 2. Search for cast details online
+ 3. Download/Delete movie details to/from MySQL database *(only if using online/offline mode)*
+ 4. Show the downloaded movie list and also their details *(only if using online/offline mode)*
 
 ## Screenshots
 Main menu (Online/Offline mode)
