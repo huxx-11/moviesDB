@@ -88,11 +88,18 @@ os.system(shell + clr)
 #ONLINE MOVIE SEARCH POPULATOR FUNCTION
 def movie_search_online(nm):
     global search, num
+    show_list = []
+    filtered_list = []
     num = 0
     search = moviesdb.search_movie(nm)
-    for movie in search:
+    for i in search:
+        show_list.append([i.get('title'), i.get('year')])
+    for j in show_list:
+        if not j in filtered_list:
+            filtered_list.append(j)
+    for movie in filtered_list:
         num += 1
-        print(num, ".", movie.get('title'), "-", movie.get('year'))
+        print(num, ".", movie[0], "-", movie[1])
     return
 
 #ONLINE MOVIE DETAILS FUNCTION
