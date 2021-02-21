@@ -18,9 +18,9 @@
 ## Features
 **You can choose Online-only mode or Online/Offline mode, at the startup of the app**
 
-<center> Shows <bold>Title, Year, Rating, Directors, Cast, Plot and Genre</bold> when searching movie details </center>
+Shows **Title, Year, Rating, Directors, Cast, Plot and Genre** when searching movie details
 
-<center> Shows <bold>Name, Nicknames, Birth Date, Birth Place, Biography and Filmography</bold> when searching cast details </center>
+Shows **Name, Nicknames, Birth Date, Birth Place, Biography and Filmography** when searching cast details
 
  1. Search for movie details online
  2. Search for cast details online
