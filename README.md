@@ -29,10 +29,10 @@ Shows **Name, Nicknames, Birth Date, Birth Place, Biography and Filmography** wh
 
 ## Screenshots
 Main menu (Online/Offline mode)
-![Main Menu](https://i.ibb.co/C6csr8T/Screenshot-2021-02-20-022027.png)
+![Main Menu](https://i.ibb.co/xGhs93L/Screenshot-2021-02-22-092919.png)
 
 Movie search demo
-![Movie search demo](https://i.ibb.co/ZT93pX8/Screenshot-2021-02-20-022209.png)
+![Movie search demo](https://i.ibb.co/k1rcyC0/Screenshot-2021-02-22-092848.png)
 
 ## Modules Used
 1. mysql-connector - https://pypi.org/project/mysql-connector/
