@@ -69,7 +69,7 @@ def check_db_tb(db_name):
 
 
 while True:
-    db_choice = str(input("Do you want to use local MySQL database to store info (Default Y)? [Y/N]: ") or "Y" or "y")
+    db_choice = str(input("Do you want to use local MySQL database to store info (Default N)? [Y/N]: ") or "N" or "n")
     if db_choice in ["y", "Y"]:
         print("You're using online/offline mode")
         enable_local_db()
