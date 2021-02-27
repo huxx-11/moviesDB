@@ -32,12 +32,13 @@ def enable_local_db():
         try:
             db = sq.connect(host=sql_host, user=sql_id, passwd=sql_pass)
             cursor = db.cursor()
-            break
+            return True
         except:
             print(
                 "Database connection failed! Please check if local instance is running or not, \nand press any key to try again")
             input()
             os.system(shell + clr)
+            return False
 
 #DATABASE AND TABLE CHECK FUNCTION
 def check_db_tb(db_name):
@@ -67,23 +68,23 @@ def check_db_tb(db_name):
     else:
         print("\nTable found!")
 
-
-while True:
-    db_choice = str(input("Do you want to use local MySQL database to store info (Default N)? [Y/N]: ") or "N" or "n")
-    if db_choice in ["y", "Y"]:
-        print("You're using online/offline mode")
-        enable_local_db()
-        check_db_tb(sql_db)
-        break
-    elif db_choice in ["n", "N"]:
-        print("You're using online only mode'")
-        break
-    else:
-        print("Wrong Choice! Try again")
-        input()
-        os.system(shell + clr)
-
-os.system(shell + clr)
+def useDB():
+    global db_choice
+    while True:
+        db_choice = str(input("Do you want to use local MySQL database to store info (Default N)? [Y/N]: ") or "N" or "n")
+        if db_choice in ["y", "Y"]:
+            print("You're using online/offline mode")
+            if enable_local_db():
+                check_db_tb(sql_db)
+            else:
+                pass
+        elif db_choice in ["n", "N"]:
+            print("You're using online only mode'")
+            break
+        else:
+            print("Wrong Choice! Try again")
+            input()
+            os.system(shell + clr)
 
 #ONLINE MOVIE SEARCH POPULATOR FUNCTION
 def movie_search_online(nm):
@@ -611,6 +612,7 @@ def online_main_menu():
             os.system(shell + clr)
     return
 
+useDB()
 if db_choice in ["y", "Y"]:
     offline_main_menu()
 elif db_choice in ["n", "N"]:
