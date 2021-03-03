@@ -8,7 +8,7 @@ elif os.name == 'posix':  # linux/mac
     clr = 'clear'
     pyt = 'python3 '
 print("Checking modules")
-os.system(shell + 'pip3 install IMDbPY mysql-connector pyfiglet')
+os.system(shell + 'pip3 install IMDbPY mysql-connector pyfiglet pillow requests')
 os.system(shell + clr)
 import imdb
 import mysql.connector as sq

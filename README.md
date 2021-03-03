@@ -38,3 +38,5 @@ Movie search demo
 1. mysql-connector - https://pypi.org/project/mysql-connector/
 2. IMDbPY - https://pypi.org/project/IMDbPY/
 3. pyfiglet - https://pypi.org/project/pyfiglet/
+4. pillow - https://pypi.org/project/Pillow/
+5. requests - https://pypi.org/project/requests/
