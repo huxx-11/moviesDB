@@ -88,26 +88,26 @@ def useDB():
 
 #ONLINE MOVIE SEARCH POPULATOR FUNCTION
 def movie_search_online(nm):
-    global search, num
-    show_list = []
-    filtered_list = []
+    global filtered_dict, num
+    show_dict = {}
+    filtered_dict = {}
     num = 0
     search = moviesdb.search_movie(nm)
     for i in search:
-        show_list.append([i.get('title'), i.get('year')])
-    for j in show_list:
-        if not j in filtered_list:
-            filtered_list.append(j)
-    for movie in filtered_list:
+        show_dict.update({i.getID():(i.get('title'),str(i.get('year')))})
+    for j in show_dict:
+        if not show_dict[j] in list(filtered_dict.values()):
+            filtered_dict.update({j:show_dict[j]})
+    for movie in list(filtered_dict.values()):
         num += 1
         print(num, ".", movie[0], "-", movie[1])
     return
 
 #ONLINE MOVIE DETAILS FUNCTION
 def movie_detail_online(x):
-    m_id = search[x - 1].getID()
+    m_id = list(filtered_dict)[x-1]
     mv = moviesdb.get_movie(m_id)
-    global uniq, title, year, rating, directors, cast, plot, genre
+    global uniq, title, year, rating, directors, cast, plot, genre, cover
     uniq = m_id
     title = mv.get('title')
     year = mv.get('year')
@@ -127,7 +127,14 @@ def movie_detail_online(x):
         plot = None
     else:
         plot = (mv.get('plot outline')).replace('"', "")
-    genre = ', '.join(mv.get('genre'))
+    if mv.get('genre') is None:
+        genre = None
+    else:
+        genre = ', '.join(mv.get('genre'))
+    if mv.get('full-size cover url') is None:
+        cover = None
+    else:
+        cover = mv.get('full-size cover url')
     return
 
 #OFFLINE MOVIE SEARCH POPULATOR FUNCTION
@@ -329,11 +336,25 @@ def online_show_menu(name):
         if movie_choice <= num and not movie_choice == 0:
             os.system(shell + clr)
             movie_detail_online(movie_choice)
-            print(fg.figlet_format(title, "slant"), "\nYear: ", str(year), "\n\nRating: ", str(rating),
-                  "\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(
-                      cast) + "\n\nGenre: " + str(genre))
-            print("\nPress any key to continue...")
-            input()
+            while True:
+                while True:
+                    print(fg.figlet_format(title, "slant"), "\nYear: ", str(year), "\n\nRating: ", str(rating),
+                    "\n\nPlot Details: " + str(plot) + "\n\nDirectors: " + str(directors) + "\n\nCast: " + str(
+                    cast) + "\n\nGenre: " + str(genre))
+                    try:
+                        cov_show=input("\nPress Enter to view cover art [or enter 0 to go back]: ")
+                        break
+                    except:
+                        print("Wrong choice!Press any key to try again!")
+                        input()
+                if cov_show == '':
+                    show_cover(cover,title)
+                    print("Showing cover art")
+                elif cov_show=='0':
+                    break
+                else:
+                    print("Wrong choice!Press any key to try again!")
+                    input()
             os.system(shell + clr)
         elif movie_choice == 0:
             os.system(shell + clr)
@@ -611,6 +632,32 @@ def online_main_menu():
             input()
             os.system(shell + clr)
     return
+
+#MOVIE COVER FUNCION
+def show_cover(url,name):
+    if url is None:
+        print("Cover image not found! Press any key to continue...")
+    else:
+        import tkinter as tk
+        from PIL import ImageTk, Image
+        import requests
+        from io import BytesIO
+        root = tk.Tk()
+        root.geometry("450x675")
+        root.title(name)
+        root.iconbitmap('app_icon.ico')
+        response = requests.get(url)
+        img_data = response.content
+        basewidth = 450
+        res_img = Image.open(BytesIO(img_data))
+        wpercent = (basewidth / float(res_img.size[0]))
+        hsize = int((float(res_img.size[1]) * float(wpercent)))
+        display = res_img.resize((basewidth, hsize), Image.ANTIALIAS)
+        img = ImageTk.PhotoImage(display)
+        panel = tk.Label(root, image=img, bd=0)
+        panel.pack(side="bottom", fill="both", expand="yes")
+        root.mainloop()
+        return
 
 useDB()
 if db_choice in ["y", "Y"]:
