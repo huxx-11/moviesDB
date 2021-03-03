@@ -246,7 +246,7 @@ def person_search(actor_name):
 
 #CAST SEARCH DETAILS FUNTION
 def person_details(x):
-    global actor_id, ac_name, ac_nick, ac_birthp, ac_dob, ac_bio, ac_films, mv_counter
+    global actor_id, ac_name, ac_nick, ac_birthp, ac_dob, ac_bio, ac_films, mv_counter, ac_url
     mv_counter=0
     ac_films=[]
     actor_id=actor_list[x-1].getID()
@@ -268,6 +268,10 @@ def person_details(x):
         ac_bio = ', '.join(actor_details['mini biography'])
     except:
         ac_bio="No biography found"
+    try:
+        ac_url = actor_details.get('full-size headshot')
+    except:
+        ac_url = None
     try:
         for i in actor_details['filmography']:
             if i in ['actor','actress']:
@@ -432,12 +436,12 @@ def search_cast_menu():
                         print(divider)
                         while True:
                             try:
-                                film_choice = int(input("\nPress Enter to show filmography (or Enter 0 to go back): "))
+                                film_choice = int(input("\nPress Enter to show filmography\nEnter 1 to view Picture (or Enter 0 to go back): "))
                                 break
                             except:
-                                film_choice = True
+                                film_choice = "show"
                                 break
-                        if film_choice:
+                        if film_choice == "show":
                             os.system(shell + clr)
                             print("Filmography of ", ac_name)
                             print(divider)
@@ -446,6 +450,9 @@ def search_cast_menu():
                             input()
                             os.system(shell + clr)
                             pass
+                        elif film_choice == 1:
+                            show_cover(ac_url, ac_name)
+                            print("Showing picture")
                         elif film_choice == 0:
                             os.system(shell + clr)
                             break
@@ -633,7 +640,7 @@ def online_main_menu():
             os.system(shell + clr)
     return
 
-#MOVIE COVER FUNCION
+#MOVIE/CAST COVER FUNCION
 def show_cover(url,name):
     if url is None:
         print("Cover image not found! Press any key to continue...")
