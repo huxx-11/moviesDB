@@ -652,7 +652,7 @@ def show_cover(url,name):
         root = tk.Tk()
         root.geometry("450x675")
         root.title(name)
-        root.iconbitmap('app_icon.ico')
+        #root.iconbitmap('app_icon.ico')
         response = requests.get(url)
         img_data = response.content
         basewidth = 450
