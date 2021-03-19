@@ -13,6 +13,7 @@ os.system(shell + clr)
 import imdb
 import mysql.connector as sq
 import pyfiglet as fg
+import questionary
 
 banner = fg.figlet_format("Movie Search")
 divider = "--------------------------------------"
@@ -67,6 +68,7 @@ def check_db_tb(db_name):
         db.commit()
     else:
         print("\nTable found!")
+    return
 
 def useDB():
     global db_choice
@@ -76,6 +78,7 @@ def useDB():
             print("You're using online/offline mode")
             if enable_local_db():
                 check_db_tb(sql_db)
+                break
             else:
                 pass
         elif db_choice in ["n", "N"]:
