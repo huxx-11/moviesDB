@@ -13,7 +13,6 @@ os.system(shell + clr)
 import imdb
 import mysql.connector as sq
 import pyfiglet as fg
-import questionary
 
 banner = fg.figlet_format("Movie Search")
 divider = "--------------------------------------"
