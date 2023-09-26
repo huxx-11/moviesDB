@@ -652,16 +652,16 @@ def show_cover(url,name):
         import requests
         from io import BytesIO
         root = tk.Tk()
-        root.geometry("450x675")
+        root.geometry("800x1200")
         root.title(name)
         #root.iconbitmap('app_icon.ico')
         response = requests.get(url)
         img_data = response.content
-        basewidth = 450
+        basewidth = 800
         res_img = Image.open(BytesIO(img_data))
         wpercent = (basewidth / float(res_img.size[0]))
         hsize = int((float(res_img.size[1]) * float(wpercent)))
-        display = res_img.resize((basewidth, hsize), Image.ANTIALIAS)
+        display = res_img.resize((basewidth, hsize))
         img = ImageTk.PhotoImage(display)
         panel = tk.Label(root, image=img, bd=0)
         panel.pack(side="bottom", fill="both", expand="yes")
