@@ -331,7 +331,7 @@ def online_show_menu(name):
                 print("Searching movie online")
                 print(divider)
                 movie_search_online(name)
-                print(">> Enter 0 to go back")
+                print(">>Enter 0 to go back")
                 print(divider)
                 movie_choice = int(input("Enter the movie number: "))
                 break
